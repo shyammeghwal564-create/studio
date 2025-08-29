@@ -43,7 +43,7 @@ export function DayLogs({ log }: DayLogsProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-red-600 dark:text-red-500">
               <XCircle />
-              Pending/Missed Tasks
+              Incomplete Tasks
             </CardTitle>
           </CardHeader>
           <CardContent>
