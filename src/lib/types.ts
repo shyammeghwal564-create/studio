@@ -24,13 +24,14 @@ export interface IncompleteLogEntry {
 }
 
 export interface DayLog {
+  date: string;
   completed: CompletedLogEntry[];
   incomplete: IncompleteLogEntry[];
   closed: boolean;
 }
 
 export interface Logs {
-  [date: string]: DayLog;
+  [date: string]: Omit<DayLog, 'date'>;
 }
 
 export interface Exam {

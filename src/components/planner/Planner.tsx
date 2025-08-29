@@ -14,6 +14,8 @@ import { MonthlySummary } from './MonthlySummary';
 import { StudyHabitScore } from './StudyHabitScore';
 import { useToast } from '@/hooks/use-toast';
 import { ManageTemplatesDialog } from './ManageTemplatesDialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '../ui/card';
 
 const THEMES = [
   { id: 'theme10', name: 'Neutral', overlay: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))', darkOverlay: 'linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.15))' },
@@ -236,11 +238,24 @@ export function Planner() {
               ))}
             </div>
           </section>
-          
-          <DayLogs log={dayLog} />
-          
-          <MonthlySummary summary={monthlySummary} />
 
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <Tabs defaultValue="daily-log">
+              <div className="p-4 border-b">
+                <TabsList>
+                  <TabsTrigger value="daily-log">Daily Log</TabsTrigger>
+                  <TabsTrigger value="monthly-summary">Monthly Summary</TabsTrigger>
+                </TabsList>
+              </div>
+              <TabsContent value="daily-log" className="p-4 md:p-6">
+                <DayLogs log={dayLog} />
+              </TabsContent>
+              <TabsContent value="monthly-summary" className="p-4 md:p-6">
+                <MonthlySummary summary={monthlySummary} />
+              </TabsContent>
+            </Tabs>
+          </Card>
+          
           <footer className="text-center text-muted-foreground pt-8">
             <p>Goal for Exam - Forge your path to success.</p>
           </footer>
