@@ -50,7 +50,6 @@ export function ManageTemplatesDialog({ templates, onRemoveTemplate }: ManageTem
                     <div className="h-3 w-3 rounded-full" style={{ backgroundColor: template.color }}></div>
                     <div>
                       <p className="font-medium">{template.title}</p>
-                      <p className="text-xs text-muted-foreground">{template.target} {template.unit}</p>
                     </div>
                   </div>
                   <TooltipProvider>

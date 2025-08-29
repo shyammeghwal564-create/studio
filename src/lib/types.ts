@@ -1,8 +1,8 @@
 export interface Template {
   id: string;
   title: string;
-  target: number;
-  unit: 'mins' | 'Qs' | 'pages';
+  // target: number; // Removed as per user request
+  // unit: 'mins' | 'Qs' | 'pages'; // Removed as per user request
   color: string;
 }
 
@@ -10,8 +10,8 @@ export interface CompletedLogEntry {
   id: string;
   templateId: string;
   title: string;
-  amount: number;
-  unit: string;
+  // amount: number; // Removed as per user request
+  // unit: string; // Removed as per user request
   at: string;
 }
 

@@ -31,7 +31,7 @@ export function ActiveTaskCard({ task, date, isDayClosed, onComplete }: ActiveTa
         </TooltipProvider>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-sm text-muted-foreground">Target: {task.target} {task.unit}</p>
+        {/* Target and unit removed as per user request */}
       </CardContent>
       <CardFooter className="flex gap-2">
         <Button size="sm" className="w-full" onClick={() => onComplete(date, task)} disabled={isDayClosed}>

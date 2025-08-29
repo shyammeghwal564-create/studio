@@ -47,18 +47,17 @@ export function Planner() {
     root.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
-  const getActive = useCallback((date: string) => {
+  const getActive = useCallback((date: string, currentTemplates: Template[]) => {
     const dayLog = logs[date] || { completed: [], incomplete: [], closed: false };
     const doneIds = new Set([...dayLog.completed.map(x => x.templateId), ...dayLog.incomplete.map(x => x.templateId)]);
-    return templates.filter(t => !doneIds.has(t.id));
-  }, [logs, templates]);
+    return currentTemplates.filter(t => !doneIds.has(t.id));
+  }, [logs]);
+
 
   const addTemplate = useCallback((title: string) => {
     const newTemplate: Template = {
       id: uid(),
       title: title.trim(),
-      target: 0,
-      unit: 'mins',
       color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
     };
     setTemplates(prev => [...prev, newTemplate]);
@@ -66,13 +65,25 @@ export function Planner() {
 
   const removeTemplate = useCallback((id: string) => {
     setTemplates(prev => prev.filter(t => t.id !== id));
-  }, [setTemplates]);
+    // Also remove from any logs
+    setLogs(prevLogs => {
+      const newLogs = { ...prevLogs };
+      for (const date in newLogs) {
+        newLogs[date] = {
+          ...newLogs[date],
+          completed: newLogs[date].completed.filter(c => c.templateId !== id),
+          incomplete: newLogs[date].incomplete.filter(i => i.templateId !== id),
+        };
+      }
+      return newLogs;
+    });
+  }, [setTemplates, setLogs]);
 
   const markComplete = useCallback((date: string, t: Template) => {
     setLogs(prev => {
       const l = prev[date] || { completed: [], incomplete: [], closed: false };
       if (l.closed) return prev;
-      const entry = { id: uid(), templateId: t.id, title: t.title, amount: t.target, unit: t.unit, at: new Date().toISOString() };
+      const entry = { id: uid(), templateId: t.id, title: t.title, at: new Date().toISOString() };
       return { ...prev, [date]: { ...l, completed: [...l.completed, entry] } };
     });
   }, [setLogs]);
@@ -163,10 +174,10 @@ export function Planner() {
   }, [setTemplates, setLogs, setExam, setThemeId, setDarkMode, toast]);
 
   const exportCSV = useCallback(() => {
-    const rows = [['Date', 'Status', 'Title', 'Amount', 'Unit', 'Reason']];
+    const rows = [['Date', 'Status', 'Title', 'Reason']];
     Object.entries(logs).forEach(([date, l]) => {
-      l.completed.forEach(c => rows.push([date, 'Completed', c.title, String(c.amount || ''), c.unit || '', '']));
-      l.incomplete.forEach(i => rows.push([date, 'Incomplete', i.title, '', '', i.reason || '']));
+      l.completed.forEach(c => rows.push([date, 'Completed', c.title, '']));
+      l.incomplete.forEach(i => rows.push([date, 'Incomplete', i.title, i.reason || '']));
     });
     const csv = rows.map(r => r.map(c => `"${String(c || '').replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -178,7 +189,7 @@ export function Planner() {
     URL.revokeObjectURL(url);
   }, [logs]);
 
-  const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
+  const activeForView = useMemo(() => getActive(viewDate, templates), [getActive, viewDate, templates]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
   const isDayClosedForView = useMemo(() => {
     if (viewDate !== todayISO()) return true;
