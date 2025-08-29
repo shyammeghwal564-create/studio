@@ -30,7 +30,7 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <PlusCircle className="h-6 w-6" />
-          Create New Task Template
+          Create New Task
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -62,7 +62,7 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
           </Select>
           <Button type="submit" className="w-full md:w-auto">
             <PlusCircle className="h-4 w-4 mr-2" />
-            Add Template
+            Add Task
           </Button>
         </form>
       </CardContent>
