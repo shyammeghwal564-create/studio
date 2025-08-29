@@ -79,6 +79,12 @@ export function Planner() {
     });
   }, [setTemplates, setLogs]);
 
+  const removeAllTemplates = useCallback(() => {
+    setTemplates([]);
+    setLogs({}); // Clear all logs as well, since they are tied to templates
+    toast({ title: 'Success', description: 'All task templates and logs have been deleted.' });
+  }, [setTemplates, setLogs, toast]);
+
   const markComplete = useCallback((date: string, t: Template) => {
     setLogs(prev => {
       const l = prev[date] || { completed: [], incomplete: [], closed: false };
@@ -218,7 +224,11 @@ export function Planner() {
             importJSON={importJSON}
             exportCSV={exportCSV}
           >
-            <ManageTemplatesDialog templates={templates} onRemoveTemplate={removeTemplate} />
+            <ManageTemplatesDialog
+              templates={templates}
+              onRemoveTemplate={removeTemplate}
+              onRemoveAllTemplates={removeAllTemplates}
+            />
           </PlannerHeader>
           
           <ExamCountdown exam={exam} setExam={setExam} />
@@ -272,5 +282,3 @@ export function Planner() {
     </div>
   );
 }
-
-    
