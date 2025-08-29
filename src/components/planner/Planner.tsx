@@ -222,7 +222,7 @@ export function Planner() {
           
           <AddTaskForm onAddTask={addTemplate} />
 
-          <DateNavigator viewDate={viewDate} setViewDate={setViewDate} onFinalizeDay={() => finalizeDay(viewDate)} isDayClosed={dayLog.closed} />
+          <DateNavigator viewDate={viewDate} setViewDate={setViewDate} />
           
           <section>
             <h2 className="text-2xl font-bold tracking-tight mb-4">Active Tasks for {viewDate} {dayLog.closed && <span className="text-sm font-medium text-destructive">(Closed)</span>}</h2>

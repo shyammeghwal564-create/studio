@@ -2,19 +2,17 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Calendar, Lock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 interface DateNavigatorProps {
   viewDate: string;
   setViewDate: (date: string) => void;
-  onFinalizeDay: () => void;
-  isDayClosed: boolean;
 }
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
-export function DateNavigator({ viewDate, setViewDate, onFinalizeDay, isDayClosed }: DateNavigatorProps) {
+export function DateNavigator({ viewDate, setViewDate }: DateNavigatorProps) {
   const handleDateChange = (days: number) => {
     const d = new Date(viewDate);
     d.setDate(d.getDate() + days);
@@ -59,23 +57,6 @@ export function DateNavigator({ viewDate, setViewDate, onFinalizeDay, isDayClose
           </Tooltip>
         </TooltipProvider>
       )}
-
-      <div className="ml-auto">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div>
-                <Button onClick={onFinalizeDay} disabled={isDayClosed} variant="destructive">
-                  <Lock className="h-4 w-4 mr-2" /> Close Day
-                </Button>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{isDayClosed ? 'This day is already closed' : 'Manually close and lock this day'}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
     </div>
   );
 }
