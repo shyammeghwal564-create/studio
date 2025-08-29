@@ -30,9 +30,6 @@ export function DayLogs({ log }: DayLogsProps) {
                     <p className="font-medium">{c.title}</p>
                     <p className="text-xs text-muted-foreground">{c.amount} {c.unit}</p>
                   </div>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(c.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
                 </li>
               ))}
             </ul>
@@ -58,9 +55,6 @@ export function DayLogs({ log }: DayLogsProps) {
                     <p className="font-medium">{i.title}</p>
                     <p className="text-xs text-muted-foreground capitalize">{i.reason.replace('auto-missed', 'Auto Missed')}</p>
                   </div>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(i.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
                 </li>
               ))}
             </ul>
