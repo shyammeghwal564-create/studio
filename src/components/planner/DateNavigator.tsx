@@ -15,7 +15,8 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 export function DateNavigator({ viewDate, setViewDate }: DateNavigatorProps) {
   const handleDateChange = (days: number) => {
     const d = new Date(viewDate);
-    d.setDate(d.getDate() + days);
+    // Use UTC date methods to avoid timezone shift issues
+    d.setUTCDate(d.getUTCDate() + days);
     setViewDate(d.toISOString().slice(0, 10));
   };
 
