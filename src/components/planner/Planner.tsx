@@ -48,7 +48,7 @@ export function Planner() {
   }, [darkMode]);
 
   const getActive = useCallback((date: string, currentTemplates: Template[]) => {
-    const dayLog = logs[date] || { completed: [], incomplete: [], closed: false };
+    const dayLog = logs[date] || { completed: [], incomplete: [] };
     const doneIds = new Set([...dayLog.completed.map(x => x.templateId), ...dayLog.incomplete.map(x => x.templateId)]);
     return currentTemplates.filter(t => !doneIds.has(t.id));
   }, [logs]);
