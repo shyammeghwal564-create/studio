@@ -192,9 +192,8 @@ export function Planner() {
   const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
   const isDayClosedForView = useMemo(() => {
-    if (viewDate !== todayISO()) return true;
     return !!dayLog?.closed;
-  }, [viewDate, dayLog]);
+  }, [dayLog]);
 
   const selectedTheme = THEMES.find(x => x.id === themeId) || THEMES[0];
   const overlayStyle = {
@@ -273,4 +272,5 @@ export function Planner() {
     </div>
   );
 }
- 
+
+    
