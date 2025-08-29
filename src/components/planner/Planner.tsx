@@ -180,6 +180,10 @@ export function Planner() {
 
   const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
+  const isDayClosedForView = useMemo(() => {
+    if (viewDate !== todayISO()) return true;
+    return !!dayLog?.closed;
+  }, [viewDate, dayLog]);
 
   const selectedTheme = THEMES.find(x => x.id === themeId) || THEMES[0];
   const overlayStyle = {
@@ -226,7 +230,7 @@ export function Planner() {
                   <section>
                     <h2 className="text-2xl font-bold tracking-tight mb-4">
                       Active Tasks for {viewDate} 
-                      {dayLog?.closed && <span className="text-sm font-medium text-destructive"> (Closed)</span>}
+                      {isDayClosedForView && <span className="text-sm font-medium text-destructive"> (Closed)</span>}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {activeForView.length === 0 ? (
@@ -234,7 +238,7 @@ export function Planner() {
                           No active tasks. All done for the day!
                         </div>
                       ) : activeForView.map(t => (
-                        <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={!!dayLog?.closed} onComplete={markComplete} />
+                        <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={isDayClosedForView} onComplete={markComplete} />
                       ))}
                     </div>
                   </section>
