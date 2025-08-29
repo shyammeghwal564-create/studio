@@ -7,18 +7,16 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 
 interface AddTaskFormProps {
-  onAddTask: (title: string, target: string, unit: 'mins' | 'Qs' | 'pages') => void;
+  onAddTask: (title: string) => void;
 }
 
 export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
   const [title, setTitle] = useState('');
-  const target = '30';
-  const unit = 'mins';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    onAddTask(title, target, unit);
+    onAddTask(title);
     setTitle('');
   };
 

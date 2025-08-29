@@ -52,12 +52,12 @@ export function Planner() {
     return templates.filter(t => !doneIds.has(t.id));
   }, [logs, templates]);
 
-  const addTemplate = useCallback((title: string, target: string, unit: 'mins' | 'Qs' | 'pages') => {
+  const addTemplate = useCallback((title: string) => {
     const newTemplate: Template = {
       id: uid(),
       title: title.trim(),
-      target: Number(target) || 0,
-      unit,
+      target: 0,
+      unit: 'mins',
       color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
     };
     setTemplates(prev => [...prev, newTemplate]);
