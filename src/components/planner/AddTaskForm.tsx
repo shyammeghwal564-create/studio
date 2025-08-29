@@ -33,7 +33,7 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
       <CardContent>
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-2">
           <Input
-            placeholder="Task title (e.g., Polity Revision)"
+            placeholder="Enter a new recurring task..."
             value={title}
             onChange={e => setTitle(e.target.value)}
             className="flex-grow"

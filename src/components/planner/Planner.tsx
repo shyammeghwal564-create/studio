@@ -76,15 +76,6 @@ export function Planner() {
     });
   }, [setLogs]);
 
-  const markMissed = useCallback((date: string, t: Template) => {
-    setLogs(prev => {
-      const l = prev[date] || { completed: [], incomplete: [], closed: false };
-      if (l.closed) return prev;
-      const entry = { id: uid(), templateId: t.id, title: t.title, reason: 'missed', at: new Date().toISOString() };
-      return { ...prev, [date]: { ...l, incomplete: [...l.incomplete, entry] } };
-    });
-  }, [setLogs]);
-
   const finalizeDay = useCallback((date: string) => {
     setLogs(prev => {
       const l = prev[date] || { completed: [], incomplete: [], closed: false };
@@ -241,7 +232,7 @@ export function Planner() {
                   No active tasks. All done for the day!
                 </div>
               ) : activeForView.map(t => (
-                <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={dayLog.closed} onComplete={markComplete} onMiss={markMissed} />
+                <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={dayLog.closed} onComplete={markComplete} />
               ))}
             </div>
           </section>
