@@ -9,8 +9,7 @@ import { ExamCountdown } from './ExamCountdown';
 import { DateNavigator } from './DateNavigator';
 import { AddTaskForm } from './AddTaskForm';
 import { ActiveTaskCard } from './ActiveTaskCard';
-import { DayLogs } from './DayLogs';
-import { MonthlySummary } from './MonthlySummary';
+import { History } from './History';
 import { StudyHabitScore } from './StudyHabitScore';
 import { useToast } from '@/hooks/use-toast';
 import { ManageTemplatesDialog } from './ManageTemplatesDialog';
@@ -179,18 +178,8 @@ export function Planner() {
     URL.revokeObjectURL(url);
   }, [logs]);
 
-  const monthlySummary = useMemo(() => {
-    const map: { [month: string]: { [date: string]: { completed: number; incomplete: number; closed: boolean } } } = {};
-    Object.entries(logs).forEach(([date, l]) => {
-      const ym = date.slice(0, 7);
-      if (!map[ym]) map[ym] = {};
-      map[ym][date] = { completed: l.completed.length, incomplete: l.incomplete.length, closed: !!l.closed };
-    });
-    return map;
-  }, [logs]);
-
   const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
-  const dayLog: DayLog = useMemo(() => logs[viewDate] || { completed: [], incomplete: [], closed: false }, [logs, viewDate]);
+  const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
 
   const selectedTheme = THEMES.find(x => x.id === themeId) || THEMES[0];
   const overlayStyle = {
@@ -224,37 +213,42 @@ export function Planner() {
           
           <AddTaskForm onAddTask={addTemplate} />
 
-          <DateNavigator viewDate={viewDate} setViewDate={setViewDate} />
-          
-          <section>
-            <h2 className="text-2xl font-bold tracking-tight mb-4">Active Tasks for {viewDate} {dayLog.closed && <span className="text-sm font-medium text-destructive">(Closed)</span>}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {activeForView.length === 0 ? (
-                <div className="col-span-full bg-card/80 p-6 rounded-lg text-center text-muted-foreground">
-                  No active tasks. All done for the day!
+          <Tabs defaultValue="today-tasks">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="today-tasks">Today's Tasks</TabsTrigger>
+              <TabsTrigger value="history">History</TabsTrigger>
+            </TabsList>
+            <TabsContent value="today-tasks">
+              <Card className="bg-card/80 backdrop-blur-sm mt-4">
+                <div className="p-4 md:p-6 space-y-4">
+                  <DateNavigator viewDate={viewDate} setViewDate={setViewDate} />
+                  
+                  <section>
+                    <h2 className="text-2xl font-bold tracking-tight mb-4">
+                      Active Tasks for {viewDate} 
+                      {dayLog?.closed && <span className="text-sm font-medium text-destructive"> (Closed)</span>}
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {activeForView.length === 0 ? (
+                        <div className="col-span-full bg-muted/50 p-6 rounded-lg text-center text-muted-foreground">
+                          No active tasks. All done for the day!
+                        </div>
+                      ) : activeForView.map(t => (
+                        <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={!!dayLog?.closed} onComplete={markComplete} />
+                      ))}
+                    </div>
+                  </section>
                 </div>
-              ) : activeForView.map(t => (
-                <ActiveTaskCard key={t.id} task={t} date={viewDate} isDayClosed={dayLog.closed} onComplete={markComplete} />
-              ))}
-            </div>
-          </section>
-
-          <Card className="bg-card/80 backdrop-blur-sm">
-            <Tabs defaultValue="daily-log">
-              <div className="p-4 border-b">
-                <TabsList>
-                  <TabsTrigger value="daily-log">Daily Log</TabsTrigger>
-                  <TabsTrigger value="monthly-summary">Monthly Summary</TabsTrigger>
-                </TabsList>
-              </div>
-              <TabsContent value="daily-log" className="p-4 md:p-6">
-                <DayLogs log={dayLog} />
-              </TabsContent>
-              <TabsContent value="monthly-summary" className="p-4 md:p-6">
-                <MonthlySummary summary={monthlySummary} />
-              </TabsContent>
-            </Tabs>
-          </Card>
+              </Card>
+            </TabsContent>
+            <TabsContent value="history">
+              <Card className="bg-card/80 backdrop-blur-sm mt-4">
+                <div className="p-4 md:p-6">
+                  <History logs={logs} />
+                </div>
+              </Card>
+            </TabsContent>
+          </Tabs>
           
           <footer className="text-center text-muted-foreground pt-8">
             <p>Goal for Exam - Forge your path to success.</p>
