@@ -38,7 +38,7 @@ export function PlannerHeader({
         <AshokaPillarIcon className="h-8 w-8 text-primary" />
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
-            Goal for Exam
+            Goals For Exam
           </h1>
           <p className="text-sm text-muted-foreground">Your daily guide to success.</p>
         </div>

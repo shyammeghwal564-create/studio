@@ -275,7 +275,7 @@ export function Planner() {
           </Tabs>
           
           <footer className="text-center text-muted-foreground pt-8">
-            <p>Goal for Exam - Forge your path to success.</p>
+            <p>Goals For Exam - Forge your path to success.</p>
           </footer>
         </div>
       </div>
