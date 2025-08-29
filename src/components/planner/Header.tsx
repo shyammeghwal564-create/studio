@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Sun, Moon, Download, Upload } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { AshokaPillarIcon } from './AshokaPillarIcon';
+import { GoalIcon } from './GoalIcon';
 
 interface PlannerHeaderProps {
   themes: { id: string; name: string }[];
@@ -35,7 +35,7 @@ export function PlannerHeader({
   return (
     <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div className="flex items-center gap-3">
-        <AshokaPillarIcon className="h-8 w-8 text-primary" />
+        <GoalIcon className="h-12 w-12 text-primary" />
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
             Goals For Exam
