@@ -47,11 +47,11 @@ export function Planner() {
     root.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
-  const getActive = useCallback((date: string, currentTemplates: Template[]) => {
+  const getActive = useCallback((date: string) => {
     const dayLog = logs[date] || { completed: [], incomplete: [] };
     const doneIds = new Set([...dayLog.completed.map(x => x.templateId), ...dayLog.incomplete.map(x => x.templateId)]);
-    return currentTemplates.filter(t => !doneIds.has(t.id));
-  }, [logs]);
+    return templates.filter(t => !doneIds.has(t.id));
+  }, [logs, templates]);
 
 
   const addTemplate = useCallback((title: string) => {
@@ -189,7 +189,7 @@ export function Planner() {
     URL.revokeObjectURL(url);
   }, [logs]);
 
-  const activeForView = useMemo(() => getActive(viewDate, templates), [getActive, viewDate, templates]);
+  const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
   const isDayClosedForView = useMemo(() => {
     if (viewDate !== todayISO()) return true;
@@ -273,3 +273,4 @@ export function Planner() {
     </div>
   );
 }
+ 
