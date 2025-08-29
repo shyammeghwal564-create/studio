@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'UPSC Exam Compass',
-  description: 'Your daily companion for cracking the UPSC exam.',
+  title: 'Goal for Exam',
+  description: 'Your daily guide to success.',
 };
 
 export default function RootLayout({

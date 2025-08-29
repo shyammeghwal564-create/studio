@@ -251,7 +251,7 @@ export function Planner() {
           <MonthlySummary summary={monthlySummary} />
 
           <footer className="text-center text-muted-foreground pt-8">
-            <p>UPSC Exam Compass - Forge your path to success.</p>
+            <p>Goal for Exam - Forge your path to success.</p>
           </footer>
         </div>
       </div>
