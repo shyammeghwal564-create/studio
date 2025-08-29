@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <div className="fixed inset-0 -z-20">
           <Image
-            src="https://picsum.photos/1920/1080"
+            src="https://picsum.photos/seed/study/1920/1080"
             alt="Library background"
             fill
             className="object-cover"
