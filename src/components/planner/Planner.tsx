@@ -25,6 +25,10 @@ const THEMES = [
   { id: 'theme5', name: 'Slate', overlay: 'linear-gradient(180deg, rgba(246,247,249,0.6), rgba(246,247,249,0.3))', darkOverlay: 'linear-gradient(180deg, rgba(23, 28, 36, 0.4), rgba(23, 28, 36, 0.2))' },
   { id: 'theme6', name: 'Sunset', overlay: 'linear-gradient(180deg, rgba(255,245,238,0.6), rgba(255,245,238,0.3))', darkOverlay: 'linear-gradient(180deg, rgba(87, 44, 13, 0.4), rgba(87, 44, 13, 0.2))' },
   { id: 'theme7', name: 'Lavender', overlay: 'linear-gradient(180deg, rgba(250,245,255,0.6), rgba(250,245,255,0.3))', darkOverlay: 'linear-gradient(180deg, rgba(55, 23, 80, 0.4), rgba(55, 23, 80, 0.2))' },
+  { id: 'theme8', name: 'Forest', overlay: 'linear-gradient(180deg, rgba(240, 245, 240, 0.6), rgba(240, 245, 240, 0.3))', darkOverlay: 'linear-gradient(180deg, rgba(20, 40, 20, 0.4), rgba(20, 40, 20, 0.2))' },
+  { id: 'theme9', name: 'Ocean', overlay: 'linear-gradient(180deg, rgba(238, 245, 255, 0.6), rgba(238, 245, 255, 0.3))', darkOverlay: 'linear-gradient(180deg, rgba(15, 30, 50, 0.4), rgba(15, 30, 50, 0.2))' },
+  { id: 'theme11', name: 'Ruby', overlay: 'linear-gradient(180deg, rgba(255, 240, 240, 0.6), rgba(255, 240, 240, 0.3))', darkOverlay: 'linear-gradient(180deg, rgba(60, 10, 10, 0.4), rgba(60, 10, 10, 0.2))' },
+  { id: 'theme12', name: 'Gold', overlay: 'linear-gradient(180deg, rgba(255, 250, 230, 0.6), rgba(255, 250, 230, 0.3))', darkOverlay: 'linear-gradient(180deg, rgba(70, 50, 0, 0.4), rgba(70, 50, 0, 0.2))' },
 ];
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
