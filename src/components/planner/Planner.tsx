@@ -183,22 +183,6 @@ export function Planner() {
     e.target.value = ''; // Reset file input
   }, [setTemplates, setLogs, setExam, setThemeId, setDarkMode, toast]);
 
-  const exportCSV = useCallback(() => {
-    const rows = [['Date', 'Status', 'Title', 'Reason']];
-    Object.entries(logs).forEach(([date, l]) => {
-      l.completed.forEach(c => rows.push([date, 'Completed', c.title, '']));
-      l.incomplete.forEach(i => rows.push([date, 'Incomplete', i.title, i.reason || '']));
-    });
-    const csv = rows.map(r => r.map(c => `"${String(c || '').replace(/"/g, '""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `upsc_planner_logs_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }, [logs]);
-
   const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
   const isDayClosedForView = useMemo(() => {
@@ -226,7 +210,6 @@ export function Planner() {
             setDarkMode={setDarkMode}
             exportJSON={exportJSON}
             importJSON={importJSON}
-            exportCSV={exportCSV}
           >
             <ManageTemplatesDialog
               templates={templates}

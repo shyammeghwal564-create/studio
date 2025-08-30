@@ -17,7 +17,6 @@ interface PlannerHeaderProps {
   setDarkMode: (dark: boolean) => void;
   exportJSON: () => void;
   importJSON: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  exportCSV: () => void;
   children: React.ReactNode;
 }
 
@@ -29,7 +28,6 @@ export function PlannerHeader({
   setDarkMode,
   exportJSON,
   importJSON,
-  exportCSV,
   children
 }: PlannerHeaderProps) {
   return (
@@ -99,14 +97,6 @@ export function PlannerHeader({
               </TooltipTrigger>
               <TooltipContent>
                 <p>Restore Data (JSON)</p>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" onClick={exportCSV}>Export CSV</Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Export all logs to CSV</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
