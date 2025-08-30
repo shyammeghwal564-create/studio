@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Sun, Moon, Download, Upload } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { GoalIcon } from './GoalIcon';
 
@@ -15,8 +15,6 @@ interface PlannerHeaderProps {
   setThemeId: (id: string) => void;
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
-  exportJSON: () => void;
-  importJSON: (e: React.ChangeEvent<HTMLInputElement>) => void;
   children: React.ReactNode;
 }
 
@@ -26,8 +24,6 @@ export function PlannerHeader({
   setThemeId,
   darkMode,
   setDarkMode,
-  exportJSON,
-  importJSON,
   children
 }: PlannerHeaderProps) {
   return (
@@ -75,31 +71,6 @@ export function PlannerHeader({
         </div>
         <div className="flex items-center gap-2">
           {children}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" onClick={exportJSON}>
-                  <Download className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Backup Data (JSON)</p>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button asChild variant="outline" size="icon">
-                  <Label htmlFor="import-json" className="cursor-pointer h-full w-full flex items-center justify-center">
-                    <Upload className="h-4 w-4" />
-                    <input type="file" id="import-json" accept="application/json" onChange={importJSON} className="sr-only" />
-                  </Label>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Restore Data (JSON)</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
       </div>
     </header>

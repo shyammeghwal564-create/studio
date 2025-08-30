@@ -146,43 +146,6 @@ export function Planner() {
     return cleanup;
   }, [finalizeDay, templates, setLastAutoClose, lastAutoClose]);
 
-  const exportJSON = useCallback(() => {
-    const data = { templates, logs, exam, themeId, darkMode };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `upsc_planner_backup_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }, [templates, logs, exam, themeId, darkMode]);
-
-  const importJSON = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const result = event.target?.result;
-        if (typeof result !== 'string') {
-          toast({ variant: 'destructive', title: 'Error', description: 'Failed to read file.' });
-          return;
-        }
-        const obj = JSON.parse(result);
-        if (obj.templates) setTemplates(obj.templates);
-        if (obj.logs) setLogs(obj.logs);
-        if (obj.exam) setExam(obj.exam);
-        if (obj.themeId) setThemeId(obj.themeId);
-        if (typeof obj.darkMode !== 'undefined') setDarkMode(obj.darkMode);
-        toast({ title: 'Success', description: 'Data imported successfully.' });
-      } catch {
-        toast({ variant: 'destructive', title: 'Error', description: 'Invalid JSON file.' });
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = ''; // Reset file input
-  }, [setTemplates, setLogs, setExam, setThemeId, setDarkMode, toast]);
-
   const activeForView = useMemo(() => getActive(viewDate), [getActive, viewDate]);
   const dayLog: DayLog | undefined = useMemo(() => logs[viewDate] ? { date: viewDate, ...logs[viewDate] } : undefined, [logs, viewDate]);
   const isDayClosedForView = useMemo(() => {
@@ -208,8 +171,6 @@ export function Planner() {
             setThemeId={setThemeId}
             darkMode={darkMode}
             setDarkMode={setDarkMode}
-            exportJSON={exportJSON}
-            importJSON={importJSON}
           >
             <ManageTemplatesDialog
               templates={templates}
