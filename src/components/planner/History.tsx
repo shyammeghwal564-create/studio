@@ -4,7 +4,6 @@ import React from 'react';
 import type { Logs } from '@/lib/types';
 import { DayLogs } from './DayLogs';
 import { ScrollArea } from '../ui/scroll-area';
-import { MonthlyReportChart } from './MonthlyReportChart';
 
 interface HistoryProps {
   logs: Logs;
@@ -41,7 +40,6 @@ export function History({ logs }: HistoryProps) {
                   <h3 className="text-xl font-bold">
                     {new Date(month + '-02').toLocaleString('default', { month: 'long', year: 'numeric', timeZone: 'UTC' })}
                   </h3>
-                  <MonthlyReportChart logs={organizedLogs[month]} />
                 </div>
                 <div className="space-y-6 mt-4">
                   {Object.entries(organizedLogs[month]).map(([date, logData]) => (
